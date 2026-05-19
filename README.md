@@ -1,5 +1,13 @@
-# Procesamiento-de-imagenes
-Analizador de Paletas de Colores
+## Trabajo Práctico 
+
+
+# Procesamiento digital de imagenes
+Temática: Analizador de Paletas de Colores
+
+**INTEGRANTES:**
+* Castaño Alma
+* Castelao Bravo María del Mar
+* Chirino Florencia
 
 
 ## Idea
