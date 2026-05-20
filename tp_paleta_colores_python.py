@@ -122,3 +122,14 @@ paleta_triadicos = generar_triadicos(colors)
 mostrar_paleta(paleta_complementaria, "Paleta complementaria")
 mostrar_paleta(paleta_analogos, "Paleta análoga")
 mostrar_paleta(paleta_triadicos, "Paleta triádica")
+print("\nPaleta complementaria:")
+for color in paleta_complementaria:
+    print(rgb_to_hex(color))
+
+print("\nPaleta análoga:")
+for color in paleta_analogos:
+    print(rgb_to_hex(color))
+
+print("\nPaleta triádica:")
+for color in paleta_triadicos:
+    print(rgb_to_hex(color))
