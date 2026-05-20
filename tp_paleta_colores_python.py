@@ -1,6 +1,6 @@
 from PIL import Image
-from IPython.display import display, HTML
 import colorsys
+import matplotlib.pyplot as plt
 
 
 def rgb_to_hex(rgb):
@@ -28,34 +28,40 @@ def get_dominant_colors(image_path, n_colors):
 
 
 def mostrar_paleta(colors, titulo="Paleta"):
-    html = f"""
-    <h2>{titulo}</h2>
-    <div style="
-        display:flex;
-        gap:15px;
-        margin-bottom:20px;
-        flex-wrap:wrap;
-    ">
-    """
+    n = len(colors)
 
-    for color in colors:
+    fig, ax = plt.subplots(figsize=(2 * n, 2.5))
+
+    for i, color in enumerate(colors):
+        # Dibujar bloque de color
+        ax.add_patch(
+            plt.Rectangle(
+                (i, 0),
+                1,
+                1,
+                color=[c / 255 for c in color]
+            )
+        )
+
+        # Mostrar código HEX debajo
         hex_code = rgb_to_hex(color)
 
-        html += f"""
-        <div style="text-align:center; font-family:monospace;">
-            <div style="
-                width:100px;
-                height:100px;
-                background:{hex_code};
-                border:1px solid #000;
-            "></div>
-            <div>{hex_code}</div>
-        </div>
-        """
+        ax.text(
+            i + 0.5,
+            -0.1,
+            hex_code,
+            ha='center',
+            va='top',
+            fontsize=10,
+            family='monospace'
+        )
 
-    html += "</div>"
+    ax.set_xlim(0, n)
+    ax.set_ylim(-0.3, 1)
+    ax.axis("off")
 
-    display(HTML(html))
+    plt.title(titulo)
+    plt.show()
 
 
 def cambiar_tono(color, delta):
@@ -88,18 +94,25 @@ def generar_complementaria(colores):
 
 
 def generar_analogos(colores):
-    return [cambiar_tono(color, delta)
-            for color in colores
-            for delta in (-30, 30)]
+    return [
+        cambiar_tono(color, delta)
+        for color in colores
+        for delta in (-30, 30)
+    ]
 
 
 def generar_triadicos(colores):
-    return [cambiar_tono(color, delta)
-            for color in colores
-            for delta in (120, 240)]
+    return [
+        cambiar_tono(color, delta)
+        for color in colores
+        for delta in (120, 240)
+    ]
 
 
+# =====================================================
 # Programa principal
+# =====================================================
+
 image_path = input("Ingrese la ruta de la imagen: ")
 n_colors = int(input("¿Cuántos colores desea extraer?: "))
 
@@ -122,6 +135,8 @@ paleta_triadicos = generar_triadicos(colors)
 mostrar_paleta(paleta_complementaria, "Paleta complementaria")
 mostrar_paleta(paleta_analogos, "Paleta análoga")
 mostrar_paleta(paleta_triadicos, "Paleta triádica")
+
+# Mostrar códigos HEX en consola
 print("\nPaleta complementaria:")
 for color in paleta_complementaria:
     print(rgb_to_hex(color))
