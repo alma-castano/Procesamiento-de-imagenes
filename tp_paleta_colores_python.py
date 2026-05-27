@@ -148,3 +148,14 @@ for color in paleta_analogos:
 print("\nPaleta triádica:")
 for color in paleta_triadicos:
     print(rgb_to_hex(color))
+
+def generar_monocromatica(colores):
+    palette = []
+    for color in colores:
+        r, g, b = [x / 255 for x in color]
+        h, s, v = colorsys.rgb_to_hsv(r, g, b)
+        for dv in (-0.2, 0, 0.2, 0.4):
+            vn = min(max(v + dv, 0), 1)
+            r2, g2, b2 = colorsys.hsv_to_rgb(h, s, vn)
+            palette.append((int(r2 * 255), int(g2 * 255), int(b2 * 255)))
+    return palette
